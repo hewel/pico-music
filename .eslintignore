@@ -1,0 +1,9 @@
+.cache
+/dist/*
+/node_modules/*
+/public/*
+/build/*
+/.git
+iconfont.js
+webpack
+*.config.*
