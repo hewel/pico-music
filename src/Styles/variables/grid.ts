@@ -1,2 +1,2 @@
-export const gutter: number = 12
-export const column: number = 48
+export const gutter = 12
+export const column = 48

@@ -1,4 +1,4 @@
-import { css } from '@emotion/core'
+import { css, SerializedStyles } from '@emotion/core'
 import { clamp } from 'ramda'
 
 import {
@@ -8,38 +8,36 @@ import {
     cardBorderRadius,
 } from '../variables'
 
-export const setAlign = (align?: string) => {
-    const aligns = {
-        top: 'flex-start',
-        middle: 'center',
-        bottom: 'flex-end',
-    }
-    const alignItems: string = align ? aligns[align] : ''
+export enum Align {
+    top = 'flex-start',
+    middle = 'center',
+    bottom = 'flex-end',
+}
 
+export const setAlign = (align?: Align): SerializedStyles => {
     return css`
-        align-items: ${alignItems};
+        align-items: ${align};
     `
 }
 
-export const setJustify = (justify?: string) => {
-    const justifies = {
-        start: 'flex-start',
-        end: 'flex-end',
-        center: 'center',
-        around: 'space-around',
-        between: 'space-between',
-    }
-    const justifyContent = justify ? justifies[justify] : ''
+export enum Justify {
+    start = 'flex-start',
+    end = 'flex-end',
+    center = 'center',
+    around = 'space-around',
+    between = 'space-between',
+}
 
+export const setJustify = (justify?: Justify): SerializedStyles => {
     return css`
-        justify-content: ${justifyContent};
+        justify-content: ${justify};
     `
 }
 
 export const calcSpan = (
     column: number = defColumn,
     gutter: number = defGutter
-) => (span: number = 1) => {
+) => (span = 1): number => {
     const spanNumber = clamp(1, 24)(span)
     return spanNumber === 1
         ? column + gutter
@@ -49,6 +47,12 @@ export const calcSpan = (
 export const setCard = css`
     background-color: ${componentBgc};
     border-radius: ${cardBorderRadius}px;
-    box-shadow: 0 3.2px 7.2px 0 rgba(0, 0, 0, 0.132),
-        0 0.6px 1.8px 0 rgba(0, 0, 0, 0.108);
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1),
+        0 0.2px 8px 0 rgba(0, 0, 0, 0.06);
+`
+export const setContainer = (
+    width: number = calcSpan()(24)
+): SerializedStyles => css`
+    width: ${width}px;
+    margin: 0 auto;
 `

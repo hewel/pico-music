@@ -4,12 +4,18 @@ import { css } from '@emotion/core'
 import RowContext from './GridContext'
 
 import { picoRow, picoCol } from './Grid.style'
-import { setAlign, setJustify, calcSpan } from '../../Styles/mixins'
+import {
+  setAlign,
+  Align,
+  setJustify,
+  Justify,
+  calcSpan,
+} from '../../Styles/mixins'
 import { gutter as defGutter, column } from '../../Styles/variables'
 
 interface RowProps extends React.HTMLAttributes<HTMLDivElement> {
-  align?: string
-  justify?: string
+  align?: Align
+  justify?: Justify
   gutter?: number
 }
 
@@ -24,10 +30,7 @@ export function Row(props: RowProps): JSX.Element {
     ${picoRow};
     ${setAlign(align)};
     ${setJustify(justify)};
-    margin-top: -${gutter}px;
-    margin-left: -${gutter}px;
-    margin-right: -${gutter}px;
-    margin-bottom: -${gutter}px;
+    margin: -${gutter / 2}px;
     &:not(:last-child) {
       margin-bottom: 0;
     }
@@ -50,7 +53,7 @@ export function Col(props: ColProps): JSX.Element {
     ${picoCol};
     flex: ${span ? 'none' : ''};
     width: ${width};
-    padding: ${gutter}px;
+    padding: ${gutter / 2}px;
   `
   return (
     <div css={colStyle} {...otherProps}>

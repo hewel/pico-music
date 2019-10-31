@@ -24,9 +24,9 @@ module.exports = {
     "prettier/@typescript-eslint",
     "plugin:import/errors",
     "plugin:import/warnings",
-    // "plugin:import/typescript",
-    // "plugin:@typescript-eslint/eslint-recommended",
-    // "plugin:@typescript-eslint/recommended",
+    "plugin:import/typescript",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
   ],
   plugins: ["prettier", "@typescript-eslint", "emotion", "react-hooks"],
   rules: {

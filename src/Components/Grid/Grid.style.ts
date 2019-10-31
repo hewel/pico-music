@@ -10,4 +10,5 @@ export const picoCol = css`
   flex-basis: 0;
   flex-grow: 1;
   flex-shrink: 1;
+  height: 100%;
 `

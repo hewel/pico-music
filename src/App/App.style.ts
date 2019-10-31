@@ -1,12 +1,17 @@
 import { css } from '@emotion/core'
 
 import { bodyBgc } from '../Styles/variables'
-import { calcSpan } from '../Styles/mixins'
 import { fontFamily } from '../Styles/global/font.style'
 
-const appWidth = calcSpan()(24)
-
 export const globalStyle = css`
+  html {
+    box-sizing: border-box;
+  }
+  *,
+  ::after,
+  ::before {
+    box-sizing: inherit;
+  }
   body {
     ${fontFamily};
     background-color: ${bodyBgc};
@@ -14,6 +19,8 @@ export const globalStyle = css`
 `
 
 export const appStyle = css`
-  width: ${appWidth}px;
-  margin: 0 auto;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
 `
