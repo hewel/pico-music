@@ -15,7 +15,7 @@ module.exports = {
     project: "./tsconfig.json",
   },
   extends: [
-    "eslint:recommended",
+    // "eslint:recommended",
     "airbnb",
     "plugin:react/recommended",
     "plugin:prettier/recommended",
@@ -33,12 +33,18 @@ module.exports = {
     semi: [2, "never"],
     "linebreak-style": "off",
     "react/jsx-indent": [2, 2],
-    "react/jsx-filename-extension": ["error", { extensions: [".js", ".jsx", ".ts", ".tsx"] }],
+    "react/jsx-filename-extension": [
+      "error",
+      { extensions: [".js", ".jsx", ".ts", ".tsx"] },
+    ],
     "jsx-a11y/media-has-caption": "off",
 
     "import/no-unresolved": [2, { ignore: [`U|utils.*`] }],
     "import/extensions": [2, "never"],
-    "import/no-extraneous-dependencies": [2, { devDependencies: ["webpack/**/*", "webpack.*"] }],
+    "import/no-extraneous-dependencies": [
+      2,
+      { devDependencies: ["webpack/**/*", "webpack.*"] },
+    ],
     "react/jsx-props-no-spreading": [1, { html: "ignore" }],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
@@ -87,7 +93,16 @@ module.exports = {
       },
     },
     {
-      files: ["*.json", "*.html", "*.css", "*.less", "*.scss", "*.config.*", "*.eslintrc.*", "webpack/**/*"],
+      files: [
+        "*.json",
+        "*.html",
+        "*.css",
+        "*.less",
+        "*.scss",
+        "*.config.*",
+        "*.eslintrc.*",
+        "webpack/**/*",
+      ],
       rules: {
         semi: [2, "always"],
       },

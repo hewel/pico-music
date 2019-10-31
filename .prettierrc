@@ -3,6 +3,7 @@
   "tabWidth": 4,
   "singleQuote": true,
   "trailingComma": "es5",
+  "printWidth": 80,
   "overrides": [
     {
       "files": [
@@ -33,7 +34,8 @@
     {
       "files": [
         "*.jsx",
-        "*.tsx"
+        "*.tsx",
+        "*.style.*"
       ],
       "options": {
         "tabWidth": 2

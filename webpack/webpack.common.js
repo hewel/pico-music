@@ -50,6 +50,7 @@ module.exports = {
         use: [
           isProd ? MiniCssExtractPlugin.loader : "style-loader",
           { loader: "css-loader", options: { sourceMap: true } },
+          ...(isProd ? ["postcss-loader"] : []),
         ],
       },
     ],
