@@ -1,12 +1,20 @@
 import * as React from 'react'
-import withCard from '../_utils/withCard'
+import { css } from '@emotion/core'
 
-function PlayCube(props): JSX.Element {
+import AlbumCover from './AlbumCover'
+import PlayControl from './PlayControl'
+
+import { setCard } from '../../Styles/mixins'
+
+export default function PlayCube(): JSX.Element {
+  const cubeStyle = css`
+    ${setCard};
+    overflow: hidden;
+  `
   return (
-    <div className="play-cube" {...props}>
-      PlayCube
+    <div className="play-cube" css={cubeStyle}>
+      <AlbumCover />
+      <PlayControl />
     </div>
   )
 }
-
-export default withCard(PlayCube)

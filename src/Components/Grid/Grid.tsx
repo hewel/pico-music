@@ -4,13 +4,8 @@ import { css } from '@emotion/core'
 import RowContext from './GridContext'
 
 import { picoRow, picoCol } from './Grid.style'
-import {
-  setAlign,
-  Align,
-  setJustify,
-  Justify,
-  calcSpan,
-} from '../../Styles/mixins'
+import { setAlign, Align, setJustify, Justify } from '../../Styles/mixins'
+import { calcSpan } from '../../Styles/functions'
 import { gutter as defGutter, column } from '../../Styles/variables'
 
 interface RowProps extends React.HTMLAttributes<HTMLDivElement> {

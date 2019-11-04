@@ -4,11 +4,12 @@ import { css } from '@emotion/core'
 import { Row, Col } from '../Grid'
 
 import { column, marginSm } from '../../Styles/variables'
-import { setCard, Align } from '../../Styles/mixins'
+import { setCard, Align, setContainer } from '../../Styles/mixins'
 
 export default function TopNav(): JSX.Element {
   const topNavStyle = css`
     ${setCard};
+    ${setContainer()};
     display: flex;
     height: ${column}px;
     margin-bottom: ${marginSm}px;

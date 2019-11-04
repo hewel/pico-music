@@ -38,6 +38,8 @@ module.exports = {
       { extensions: [".js", ".jsx", ".ts", ".tsx"] },
     ],
     "jsx-a11y/media-has-caption": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
 
     "import/no-unresolved": [2, { ignore: [`U|utils.*`] }],
     "import/extensions": [2, "never"],

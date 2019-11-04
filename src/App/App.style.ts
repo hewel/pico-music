@@ -1,6 +1,7 @@
 import { css } from '@emotion/core'
 
-import { bodyBgc } from '../Styles/variables'
+import { bodyBgc, black } from '../Styles/variables'
+import { setContainer } from '../Styles/mixins'
 import { fontFamily } from '../Styles/global/font.style'
 
 export const globalStyle = css`
@@ -15,6 +16,7 @@ export const globalStyle = css`
   body {
     ${fontFamily};
     background-color: ${bodyBgc};
+    color: ${black};
   }
 `
 
@@ -23,4 +25,10 @@ export const appStyle = css`
   width: 100%;
   height: 100%;
   overflow: auto;
+`
+export const containerStyle = css`
+  ${setContainer()};
+  /* display: flex; */
+  /* align-items: flex-start; */
+  height: 100%;
 `
