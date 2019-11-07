@@ -16,28 +16,90 @@ import {
   SvgIconComponent,
 } from '@material-ui/icons'
 
+import Audio from '../Audio'
+import SongContent from './SongContent'
+import PlayControlContext from './PlayControlContext'
+
 import { primaryColors } from '../../Styles/variables'
 import { psyShadow } from '../../Styles/mixins'
 import { controlWarp, controlIconWarp, playIconWarp } from './PlayControl.style'
 
-const { useState } = React
+const { useState, useEffect, useCallback, useContext } = React
 
-interface IconList {
+type IconClick = ((event?: React.MouseEvent<HTMLElement>) => void) | undefined
+
+interface ClickMethod {
+  repeat?: IconClick
+  rewind?: IconClick
+  play?: IconClick
+  forward?: IconClick
+  volume?: IconClick
+}
+
+interface IconData {
   name: string
   component: SvgIconComponent
-  onClick?: (event: React.MouseEvent<HTMLElement>) => void
 }
 
 export default function PlayControl(): JSX.Element {
-  const [playControlIcons, setPlayControlIcons] = useState<IconList[]>([
+  const { url } = useContext(SongContent)
+
+  const { onPlay } = useContext(PlayControlContext)
+
+  const [playControlIcons, setPlayControlIcons] = useState<IconData[]>([
     { name: 'repeat', component: RepeatRounded },
     { name: 'rewind', component: FastRewindRounded },
     { name: 'play', component: PlayArrowRounded },
     { name: 'forward', component: FastForwardRounded },
     { name: 'volume', component: VolumeUpRounded },
   ])
+
+  const [repeatIcon, setRepeatIcon] = useState<SvgIconComponent>(RepeatRounded)
+  const [volumeIcon, setVolumeIcon] = useState<SvgIconComponent>(
+    VolumeUpRounded
+  )
+
+  const [paused, setPaused] = useState(true)
+  const handlePlayClick = useCallback(
+    (event: React.MouseEvent<HTMLElement>): void => {
+      event.preventDefault()
+      setPaused(prevPaused => {
+        const isPaused = !prevPaused
+        if (onPlay) {
+          onPlay(isPaused)
+        }
+        return isPaused
+      })
+    },
+    [onPlay]
+  )
+
+  useEffect(() => {
+    setPlayControlIcons([
+      { name: 'repeat', component: RepeatRounded },
+      { name: 'rewind', component: FastRewindRounded },
+      { name: 'play', component: paused ? PlayArrowRounded : PauseRounded },
+      { name: 'forward', component: FastForwardRounded },
+      { name: 'volume', component: VolumeUpRounded },
+    ])
+  }, [paused])
+
+  const iconClicks: ClickMethod = {
+    play: handlePlayClick,
+  }
+
   return (
     <div className="play-control" css={controlWarp}>
+      {url && (
+        <div
+          css={css`
+            position: absolute;
+            top: -300px;
+          `}
+        >
+          <Audio url={url} paused={paused} precision={1000} />
+        </div>
+      )}
       {playControlIcons.map((icon, index) => {
         const Component = icon.component
 
@@ -66,7 +128,7 @@ export default function PlayControl(): JSX.Element {
 
         return (
           <div key={icon.name} css={iconWarpStyle}>
-            <span onClick={icon.onClick} css={iconStyle}>
+            <span onClick={iconClicks[icon.name]} css={iconStyle}>
               <Component fontSize="inherit" />
             </span>
           </div>

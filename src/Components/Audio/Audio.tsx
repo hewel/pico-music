@@ -10,7 +10,7 @@ interface AudioProps {
   paused?: boolean
   precision?: number
   onPlayStateChange?: (paused: boolean) => void
-  onTimeupdate?: (timeGroup: number[], timeRatio: number) => void
+  onTimeupdate?: (timeGroup: [number, number], timeRatio: number) => void
   onEnded?: (event: React.SyntheticEvent<HTMLAudioElement, Event>) => void
 }
 
@@ -31,7 +31,7 @@ export default function Audio(props: AudioProps): JSX.Element {
   const updateTime = useCallback(() => {
     if (onTimeupdate) {
       const { currentTime, duration } = audioRef.current
-      const valueGroup = [currentTime, duration]
+      const valueGroup: [number, number] = [currentTime, duration]
 
       intervalRef.current = window.requestAnimationFrame(updateTime)
 

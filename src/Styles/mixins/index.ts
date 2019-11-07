@@ -34,6 +34,12 @@ export const setJustify = (justify?: Justify): SerializedStyles => {
     `
 }
 
+export const flexCenter = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
 export const setCard = css`
     background-color: ${componentBgc};
     border-radius: ${cardBorderRadius}px;

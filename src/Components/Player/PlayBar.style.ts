@@ -1,7 +1,8 @@
 import { css } from '@emotion/core'
 
 import { black, grey } from '../../Styles/variables'
-import { setCard, iconWarp } from '../../Styles/mixins'
+import { calcSpan } from '../../Styles/functions'
+import { setCard, iconWarp, flexCenter } from '../../Styles/mixins'
 
 export const playBarWarp = css`
   ${setCard};
@@ -23,8 +24,9 @@ export const songInfo = css`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: ${calcSpan()(3)}px;
   height: 48px;
-  padding: 4px 4px 8px 0;
+  padding: 4px 12px 8px 0;
 `
 export const songName = css`
   font-size: 16px;
@@ -34,4 +36,20 @@ export const artistName = css`
   font-size: 12px;
   color: ${grey};
   font-weight: 300;
+`
+
+export const progress = css`
+  display: flex;
+  align-items: center;
+`
+export const timeText = css`
+  ${flexCenter};
+`
+export const moreIcon = css`
+  ${iconWarp};
+  font-size: 24px;
+  cursor: pointer;
+  &:hover {
+    color: ${black};
+  }
 `

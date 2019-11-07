@@ -10,6 +10,8 @@ export default function TopNav(): JSX.Element {
   const topNavStyle = css`
     ${setCard};
     ${setContainer()};
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
     display: flex;
     height: ${column}px;
     margin-bottom: ${marginSm}px;
