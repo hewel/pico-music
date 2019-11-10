@@ -7,6 +7,7 @@ interface SongContextValue {
     album?: {
         picUrl: string
     }
+    artist?: { name: string }[]
 }
 
 const Context = createContext<SongContextValue>({})

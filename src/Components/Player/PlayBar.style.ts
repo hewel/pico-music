@@ -31,6 +31,7 @@ export const songInfo = css`
 export const songName = css`
   font-size: 16px;
   font-weight: 400;
+  margin-bottom: 8px;
 `
 export const artistName = css`
   font-size: 12px;

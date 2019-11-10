@@ -26,12 +26,16 @@ export const sliderRail = (height = 2): SerializedStyles => css`
   border-radius: 100px;
   background-color: ${whites[4]};
 `
-export const sliderTrack = (height = 2): SerializedStyles => css`
+export const sliderTrack = (
+  height = 2,
+  interval: number
+): SerializedStyles => css`
   height: ${height}px;
   display: block;
   position: absolute;
   border-radius: 100px;
   background-color: currentColor;
+  transition: width ${interval - 50}ms linear;
   ${psyShadow};
 `
 export const trackMove = (percent: number): SerializedStyles => css`

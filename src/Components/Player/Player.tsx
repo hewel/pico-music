@@ -3,11 +3,14 @@ import { css } from '@emotion/core'
 import { useQuery } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
 
+import { Input } from '@material-ui/core'
+
 import { Row, Col } from '../Grid'
 
 import PlayCube from './PlayCube'
 import PlayBar from './PlayBar'
 
+import PlayConfigContext from './PlayConfigContext'
 import SongContent from './SongContent'
 import PlayControlContext, { ControlCallbacks } from './PlayControlContext'
 
@@ -47,8 +50,9 @@ interface SongRaw {
 }
 
 export default function Player(): JSX.Element {
+  const [songId = 1400261570, setSongId] = useState<number>()
   const { loading, data } = useQuery<SongRaw>(GET_SONG, {
-    variables: { songId: 1359595520 },
+    variables: { songId },
   })
 
   const [songData, setSongData] = useState<Song | null>(null)
@@ -58,35 +62,50 @@ export default function Player(): JSX.Element {
     }
   }, [data])
 
+  const [timeGroup, setTimeGroup] = useState<[number, number]>([0, 0])
+  const [progressValue, setProgressValue] = useState(0)
+
   const [controlCallbacks] = useState<ControlCallbacks>({
-    onPlay(paused) {
-      console.log(paused)
+    onTimeupdate(times, ratio) {
+      setTimeGroup(times)
+      setProgressValue(ratio)
     },
   })
 
   return (
-    <SongContent.Provider value={songData || {}}>
-      <div
-        className="player-warp"
-        css={css`
-          ${setContainer()};
-          position: fixed;
-          bottom: ${marginSm}px;
-          left: 50%;
-          transform: translateX(-50%);
-        `}
-      >
-        <Row align={Align.bottom}>
-          <Col span={5}>
-            <PlayControlContext.Provider value={controlCallbacks}>
-              <PlayCube />
-            </PlayControlContext.Provider>
-          </Col>
-          <Col span={19}>
-            <PlayBar />
-          </Col>
-        </Row>
-      </div>
-    </SongContent.Provider>
+    <div
+      className="player-warp"
+      css={css`
+        ${setContainer()};
+        position: fixed;
+        bottom: ${marginSm}px;
+        left: 50%;
+        transform: translateX(-50%);
+      `}
+    >
+      <Input
+        placeholder="输入歌曲ID"
+        defaultValue={1400261570}
+        onChange={(
+          event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+        ): void => {
+          setSongId(parseInt(event.target.value, 10))
+        }}
+      />
+      <PlayConfigContext.Provider value={{ interval: 200 }}>
+        <SongContent.Provider value={songData || {}}>
+          <Row align={Align.bottom}>
+            <Col span={5}>
+              <PlayControlContext.Provider value={controlCallbacks}>
+                <PlayCube />
+              </PlayControlContext.Provider>
+            </Col>
+            <Col span={19}>
+              <PlayBar progressValue={progressValue} timeGroup={timeGroup} />
+            </Col>
+          </Row>
+        </SongContent.Provider>
+      </PlayConfigContext.Provider>
+    </div>
   )
 }

@@ -9,6 +9,9 @@ interface AudioProps {
   url: string
   paused?: boolean
   precision?: number
+  interval?: number
+  controls?: boolean
+  volume?: number
   onPlayStateChange?: (paused: boolean) => void
   onTimeupdate?: (timeGroup: [number, number], timeRatio: number) => void
   onEnded?: (event: React.SyntheticEvent<HTMLAudioElement, Event>) => void
@@ -18,10 +21,12 @@ export default function Audio(props: AudioProps): JSX.Element {
   const {
     url,
     paused = false,
-    precision = 100,
+    interval = 200,
     onPlayStateChange,
     onTimeupdate,
     onEnded,
+    controls,
+    volume = 20,
   } = props
 
   const audioRef = useRef(document.createElement('audio'))
@@ -32,43 +37,38 @@ export default function Audio(props: AudioProps): JSX.Element {
     if (onTimeupdate) {
       const { currentTime, duration } = audioRef.current
       const valueGroup: [number, number] = [currentTime, duration]
-
-      intervalRef.current = window.requestAnimationFrame(updateTime)
-
-      setTimeGroup(prevValue => {
-        const isFloor =
-          calcRatio(valueGroup, precision) - calcRatio(prevValue, precision) >=
-            1 ||
-          calcRatio(prevValue, precision) - calcRatio(valueGroup, precision) >=
-            1
-        if (isFloor) {
-          onTimeupdate(valueGroup, calcRatio(valueGroup, precision))
-        }
-        if (currentTime === duration) {
-          return [0, 0]
-        }
-        return isFloor ? valueGroup : prevValue
-      })
+      setTimeGroup(valueGroup)
+      onTimeupdate(
+        [currentTime, duration],
+        parseFloat((currentTime / duration).toFixed(4)) * 100
+      )
     }
-  }, [onTimeupdate, precision])
+  }, [onTimeupdate])
 
   useEffect(() => {
     const audioEl: HTMLAudioElement = audioRef.current
-    audioEl.volume = 0.1
+    audioEl.volume = 0.2
     if (onPlayStateChange) {
       onPlayStateChange(paused)
     }
     if (paused) {
       audioEl.pause()
-      window.cancelAnimationFrame(intervalRef.current)
+      window.clearInterval(intervalRef.current)
     } else {
       audioEl.play()
-      intervalRef.current = window.requestAnimationFrame(updateTime)
+      intervalRef.current = window.setInterval(updateTime, interval)
     }
     return (): void => {
-      window.cancelAnimationFrame(intervalRef.current)
+      window.clearInterval(intervalRef.current)
     }
-  }, [onPlayStateChange, paused, updateTime])
+  }, [interval, onPlayStateChange, paused, updateTime])
 
-  return <audio ref={audioRef} src={url} controls onEnded={onEnded} />
+  useEffect(() => {
+    const audioEl: HTMLAudioElement = audioRef.current
+    audioEl.volume = volume / 100
+  }, [volume])
+
+  return (
+    <audio ref={audioRef} src={url} controls={controls} onEnded={onEnded} />
+  )
 }

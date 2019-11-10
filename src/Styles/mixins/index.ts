@@ -83,6 +83,7 @@ export const iconWarp = css`
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
     color: ${grey};
     transition: 0.2s color ease-in-out;
 `
